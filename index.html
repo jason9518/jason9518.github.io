@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jason & Jasmine Couple Page - Year 1</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+            background: linear-gradient(to bottom, #FFF8E1, #FFE0B2);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            min-height: 100vh;
+            color: #4E2C07;
+            position: relative;
+            overflow-x: hidden;
+        }
+        /* 背景動畫容器 */
+        .floating-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        /* 布丁和蛋糕 emoji */
+        .floating-item {
+            position: absolute;
+            font-size: 30px; /* 減小大小以容納更多元素 */
+            opacity: 0.5; /* 稍降低透明度 */
+            animation: float 12s infinite ease-in-out;
+        }
+        /* 漂浮動畫 */
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) translateX(20px) rotate(15deg);
+            }
+            100% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+        }
+        /* 左右邊緣分佈 */
+        .floating-item:nth-child(1) { top: 5%; left: 5%; animation-delay: 0s; }
+        .floating-item:nth-child(2) { top: 10%; left: 90%; animation-delay: 0.5s; }
+        .floating-item:nth-child(3) { top: 15%; left: 10%; animation-delay: 1s; }
+        .floating-item:nth-child(4) { top: 20%; left: 85%; animation-delay: 1.5s; }
+        .floating-item:nth-child(5) { top: 25%; left: 15%; animation-delay: 2s; }
+        .floating-item:nth-child(6) { top: 30%; left: 95%; animation-delay: 2.5s; }
+        .floating-item:nth-child(7) { top: 35%; left: 8%; animation-delay: 3s; }
+        .floating-item:nth-child(8) { top: 40%; left: 88%; animation-delay: 3.5s; }
+        .floating-item:nth-child(9) { top: 45%; left: 12%; animation-delay: 4s; }
+        .floating-item:nth-child(10) { top: 50%; left: 92%; animation-delay: 4.5s; }
+        .floating-item:nth-child(11) { top: 55%; left: 7%; animation-delay: 5s; }
+        .floating-item:nth-child(12) { top: 60%; left: 87%; animation-delay: 5.5s; }
+        .floating-item:nth-child(13) { top: 65%; left: 18%; animation-delay: 6s; }
+        .floating-item:nth-child(14) { top: 70%; left: 82%; animation-delay: 6.5s; }
+        .floating-item:nth-child(15) { top: 75%; left: 13%; animation-delay: 7s; }
+        .floating-item:nth-child(16) { top: 80%; left: 93%; animation-delay: 7.5s; }
+        .floating-item:nth-child(17) { top: 85%; left: 9%; animation-delay: 8s; }
+        .floating-item:nth-child(18) { top: 90%; left: 86%; animation-delay: 8.5s; }
+        .floating-item:nth-child(19) { top: 95%; left: 14%; animation-delay: 9s; }
+        .floating-item:nth-child(20) { top: 100%; left: 89%; animation-delay: 9.5s; }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 15px;
+        }
+        header {
+            background-color: #8B5A2B;
+            color: #FFF8E1;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+        .search-bar {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 20px;
+            background-color: #A67B5B;
+            color: #FFF8E1;
+            width: 100%;
+            max-width: 250px;
+            margin: 10px 0;
+        }
+        .search-bar::placeholder {
+            color: #E6D5B8;
+        }
+        .nav-toggle {
+            display: block;
+            background: none;
+            border: none;
+            color: #FFF8E1;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            background-color: #8B5A2B;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .nav-links.active {
+            display: flex;
+        }
+        .nav-links a {
+            color: #E6D5B8;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 1em;
+        }
+        .nav-links a:hover {
+            color: #FFF8E1;
+        }
+        .dropdown {
+            position: relative;
+            width: 100%;
+        }
+        .dropdown-btn {
+            color: #E6D5B8;
+            font-size: 1em;
+            padding: 10px;
+            display: block;
+            cursor: pointer;
+        }
+        .dropdown-btn:hover {
+            color: #FFF8E1;
+        }
+        .dropdown-content {
+            display: none;
+            background-color: #A67B5B;
+            width: 100%;
+            border-radius: 5px;
+        }
+        .dropdown-content.active {
+            display: block;
+        }
+        .dropdown-content a {
+            color: #FFF8E1;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.9em;
+        }
+        .dropdown-content a:hover {
+            background-color: #8B5A2B;
+        }
+        main {
+            background-color: rgba(139, 90, 43, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .article-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        .article-card {
+            background-color: #A67B5B;
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: left;
+            color: #FFF8E1;
+        }
+        .article-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            display: block;
+            cursor: pointer;
+        }
+        .article-card .title {
+            padding: 10px;
+            font-size: 1em;
+            line-height: 1.4;
+            margin: 0;
+        }
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .pagination a {
+            color: #E6D5B8;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1em;
+            padding: 10px;
+            display: inline-block;
+        }
+        .pagination a:hover {
+            color: #FFF8E1;
+        }
+        /* Modal Styles (Message, Image) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #FFF8E1;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 90%;
+            width: 400px;
+            color: #4E2C07;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .modal-content p {
+            font-size: 1.2em;
+            margin: 0 0 20px;
+        }
+        .close-btn {
+            background-color: #A67B5B;
+            color: #FFF8E1;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .close-btn:hover {
+            background-color: #8B5A2B;
+        }
+        .modal.active {
+            display: flex;
+        }
+        /* Image Modal Styles */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+        }
+        .image-modal-content {
+            max-width: 96%;
+            max-height: 96%;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .image-modal-content img {
+            max-width: 56%;
+            max-height: 56%;
+            height: auto;
+            width: auto;
+            display: block;
+            object-fit: contain;
+        }
+        .image-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #A67B5B;
+            color: #FFF8E1;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .image-close-btn:hover {
+            background-color: #8B5A2B;
+        }
+        .image-modal.active {
+            display: flex;
+        }
+        @media (min-width: 576px) {
+            .container {
+                width: 95%;
+            }
+            .article-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .article-card img {
+                height: 140px;
+            }
+        }
+        @media (min-width:  marcus){
+            .article-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 25px;
+            }
+            .article-card img {
+                height: 150px;
+            }
+            main {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景動畫層 -->
+    <div class="floating-background">
+        <div class="floating-item">🍮</div>
+        <div class="floating-item">🍰</div>
+        <div class="floating-item">🍮</div>
+        <div class="floating-item">🍰</div>
+        <div class="floating-item">🍮</div>
+        <div class="floating-item">🍰</div>
+        <div class="floating-item">🍮</div>
+        <div class="floating-item">🍰</div>
+        <div class="floating-item">🍮</div>
+        <div class="floating-item">🍰</div>
+        <div class="floating-item">🍮</div>
+        <div class="floating-item">🍰</div>
+        <div class="floating-item">🍮</div>
+        <div class="floating-item">🍰</div>
+        <div class="floating-item">🍮</div>
+        <div class="floating-item">🍰</div>
+        <div class="floating-item">🍮</div>
+        <div class="floating-item">🍰</div>
+        <div class="floating-item">🍮</div>
+        <div class="floating-item">🍰</div>
+    </div>
+    <div class="container">
+        <header>
+            <nav class="navbar">
+                <div class="logo">Jason & Jasmine Couple Page</div>
+                <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+                <div class="nav-links">
+                    <a href="#" onclick="openMessageModal()">對你說的話</a>
+                    <!-- <div class="dropdown">
+                        <span class="dropdown-btn">Years ▼</span>
+                        <div class="dropdown-content">
+                        </div>
+                    </div> -->
+                </div>
+            </nav>
+        </header>
+    </div>
+    <div class="container">
+        <main>
+            <div class="article-grid">
+                <article class="article-card">
+                    <img src="https://i.postimg.cc/L8990g5C/tw.jpg" onclick="openImageModal(this.src)">
+                    <h3 class="title">一齊無幾耐就去左台灣 掛住你所以帶埋你去</h3>
+                </article>
+                <article class="article-card">
+                    <img src="https://i.postimg.cc/C1BLsy5w/firstdisney.jpg" onclick="openImageModal(this.src)">
+                    <h3 class="title">第一次去迪士尼</h3>
+                </article>
+                <article class="article-card">
+                    <img src="https://i.postimg.cc/8PBkHmpf/nmixxMC.jpg" onclick="openImageModal(this.src)">
+                    <h3 class="title">飄揚過海睇Idol 差啲就可以拍一日拖</h3>
+                </article>
+                <article class="article-card">
+                    <img src="https://i.postimg.cc/vTnTbRw0/BBbirth.jpg" onclick="openImageModal(this.src)">
+                    <h3 class="title">同B過嘅第一個生日 </h3>
+                </article>
+                <article class="article-card">
+                    <img src="https://i.postimg.cc/43Fxc4J8/firstcook.jpg" onclick="openImageModal(this.src)">
+                    <h3 class="title">小廚神</h3>
+                </article>
+                <article class="article-card">
+                    <img src="https://i.postimg.cc/rmKzZ0nX/birthgift.jpg" onclick="openImageModal(this.src)">
+                    <h3 class="title">生日禮物 我地之後會去歐洲度蜜月搵返佢</h3>
+                </article>
+                <article class="article-card">
+                    <img src="https://i.postimg.cc/wTdTLGpd/mybirth.jpg" onclick="openImageModal(this.src)">
+                    <h3 class="title">多謝你願意冒險同我過生日</h3>
+                </article>
+                <article class="article-card">
+                    <img src="https://i.postimg.cc/VNNN50cr/firstcamman.jpg" onclick="openImageModal(this.src)">
+                    <h3 class="title">全日拍拖 第一次感受到camman原來好辛苦 但係model好可愛</h3>
+                </article>
+                <article class="article-card">
+                    <img src="https://i.postimg.cc/0QT5ttKD/Firstlunch-School.jpg" onclick="openImageModal(this.src)">
+                    <h3 class="title">第一次去搵你食飯 坐係公園好舒服</h3>
+                </article>
+                <article class="article-card">
+                    <img src="https://i.postimg.cc/FFk7jSk0/disney.jpg" onclick="openImageModal(this.src)">
+                    <h3 class="title">迪士尼全日遊 可愛的寶寶</h3>
+                </article>
+                <article class="article-card">
+                    <img src="https://i.postimg.cc/PrmJ7k4x/disney2.jpg" onclick="openImageModal(this.src)">
+                    <h3 class="title">其實你真係好可愛 </h3>
+                </article>
+                <article class="article-card">
+                    <img src="https://i.postimg.cc/kXrDw5Wz/disney3.jpg" onclick="openImageModal(this.src)">
+                    <h3 class="title">好多人排隊 但係我覺得你最靚</h3>
+                </article>
+                <article class="article-card">
+                    <img src="https://i.postimg.cc/mgBkf6XS/disney4.jpg" onclick="openImageModal(this.src)">
+                    <h3 class="title">一朵鮮花插在大黑熊上</h3>
+                </article>
+                <article class="article-card">
+                    <img src="https://i.postimg.cc/yx012F05/longisland1.jpg" onclick="openImageModal(this.src)">
+                    <h3 class="title">真正出遠門 以為去好耐</h3>
+                </article>
+                <article class="article-card">
+                    <img src="https://i.postimg.cc/DfGwWKRg/longisland2.jpg" onclick="openImageModal(this.src)">
+                    <h3 class="title">情侶裝超好看</h3>
+                </article>
+                <article class="article-card">
+                    <img src="https://i.postimg.cc/1t2Xkm2g/1.jpg" onclick="openImageModal(this.src)">
+                    <h3 class="title">最後放一個可愛的寶寶</h3>
+                </article>
+            </div>
+            <div class="pagination">
+            </div>
+        </main>
+    </div>
+    <!-- Message Modal -->
+    <div class="modal" id="messageModal">
+        <div class="modal-content">
+            <p>今天係我地嘅第一個週年，時間真係過得好快，但每一日都充滿著溫暖與幸福。</p>
+            <br>
+            <p>呢一年入面，我地一齊經歷左快樂，幸福嘅事，你嘅陪伴令我嘅世界變得完整。曾經我有諗過放棄我份FYP，但係有你嘅出現先令我有動力繼續做落去。我好感激你選擇同我行過呢一年。</p>
+            <br>
+            <p>呢一年有好多值得開心嘅事但同時我都成日令到你唔開心，係未來嘅日子，我會努力成為一個更好嘅人，同你去唔同嘅地方，經歷好多你未做過嘅事，創造更多屬於我地嘅回憶。</p>
+            <br>
+            <p>愛你，永遠愛你。</p>
+            <button class="close-btn" onclick="closeMessageModal()">關閉</button>
+        </div>
+    </div>
+    <!-- Image Modal -->
+    <div class="image-modal" id="imageModal">
+        <div class="image-modal-content">
+            <img id="modalImage" src="" alt="放大圖片">
+            <button class="image-close-btn" onclick="closeImageModal()">關閉</button>
+        </div>
+    </div>
+    <script>
+        // 漢堡選單切換
+        document.querySelector('.nav-toggle').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+        // Message Modal 控制
+        function openMessageModal() {
+            document.getElementById('messageModal').classList.add('active');
+        }
+        function closeMessageModal() {
+            document.getElementById('messageModal').classList.remove('active');
+        }
+        // Image Modal 控制
+        function openImageModal(src) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = src;
+            modal.classList.add('active');
+        }
+        function closeImageModal() {
+            document.getElementById('imageModal').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
